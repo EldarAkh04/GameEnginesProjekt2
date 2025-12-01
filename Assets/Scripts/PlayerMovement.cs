@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    //private float moveH, moveV;
+    //private float moveH, moveV; !!
     Vector2 movement;
     public float moveSpeed = 1.0f;
 
-    private void Awake()
+    private void Awake() 
     {
         rb = GetComponent<Rigidbody2D>();
     }
