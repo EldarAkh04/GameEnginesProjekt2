@@ -5,25 +5,26 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    Vector2 movement;
-    public float moveSpeed = 1.0f;
+    private Animator animator;
+    private Vector2 movement;
+    [SerializeField] public float moveSpeed = 1.0f;
+
+    private const string horizontal = "Horizontal";
+    private const string vertical = "Vertical";
 
     private void Awake() 
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movement.Set(InputManager.Movement.x, InputManager.Movement.y);
+        rb.velocity = movement * moveSpeed;
+        animator.SetFloat(horizontal, movement.x);
+        animator.SetFloat(vertical, movement.y);
     }
-
-    void FixedUpdate()
-    {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log(collision.gameObject.name);
