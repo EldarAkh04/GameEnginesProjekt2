@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Wichtig für Image
-using TMPro;          // Wichtig für TextMeshPro
+using UnityEngine.UI;
+using TMPro;
 
 public class NPC : MonoBehaviour, IInteractable
 {
@@ -51,29 +51,32 @@ public class NPC : MonoBehaviour, IInteractable
         StartCoroutine(TypeLine());
     }
 
+    // Ausschnitt aus NPC.cs
     void NextLine()
     {
         if(isTyping)
         {
-           // Text sofort vervollständigen
+           // Wenn der Text noch getippt wird, Text sofort vervollständigen
            StopAllCoroutines();
            dialogueText.SetText(dialogueData.dialogueLines[dialogueIndex]);
            isTyping = false;
+           // WICHTIG: Die Methode ist hier beendet. Der nächste Klick geht zur nächsten Zeile.
+           return; 
+        }
+
+        // NUR wenn das Tippen bereits beendet ist: zum nächsten Satz gehen.
+        dialogueIndex++; 
+
+        if(dialogueIndex < dialogueData.dialogueLines.Length)
+        {
+            StartCoroutine(TypeLine());
         }
         else
         {
-            dialogueIndex++;
-
-            if(dialogueIndex < dialogueData.dialogueLines.Length)
-            {
-                StartCoroutine(TypeLine());
-            }
-            else
-            {
-                EndDialogue();
-            }
+            EndDialogue();
         }
     }
+    
 
     IEnumerator TypeLine()
     {
@@ -83,8 +86,11 @@ public class NPC : MonoBehaviour, IInteractable
         foreach(char letter in dialogueData.dialogueLines[dialogueIndex].ToCharArray())
         {
             dialogueText.text += letter;
-            // Optional: Hier Sound abspielen
-            yield return new WaitForSeconds(dialogueData.typingSpeed);
+            
+            // WICHTIGE ÄNDERUNG:
+            // Wir benutzen WaitForSecondsRealtime statt WaitForSeconds.
+            // Das funktioniert auch, wenn Time.timeScale auf 0 ist (Pause).
+            yield return new WaitForSecondsRealtime(dialogueData.typingSpeed);
         }
 
         isTyping = false;
@@ -94,7 +100,8 @@ public class NPC : MonoBehaviour, IInteractable
            dialogueData.autoProgressLines.Length > dialogueIndex && 
            dialogueData.autoProgressLines[dialogueIndex])
         {
-            yield return new WaitForSeconds(dialogueData.autoProgressDelay);
+            // Auch hier Realtime nutzen, sonst hängt es beim Auto-Progress
+            yield return new WaitForSecondsRealtime(dialogueData.autoProgressDelay);
             NextLine();
         }
     }
