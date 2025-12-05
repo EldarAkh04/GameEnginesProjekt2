@@ -15,10 +15,10 @@ MonoBehaviour:
   npcName: Old Man
   npcPortrait: {fileID: 21300000, guid: 8a25fee1d51d34849a432559e96bcf55, type: 3}
   dialogueLines:
-  - Das ist der Anfang des Dialogs, den wir im ersten Screenshot sehen!
+  - Hallo Player8
   - Wie kann ich dir helfen?
-  autoProgressLines: 0000
+  autoProgressLines: 0101
   autoProgressDelay: 1.5
-  typingSpeed: 1
+  typingSpeed: 0.05
   voiceSound: {fileID: 0}
   voicePitch: 1
