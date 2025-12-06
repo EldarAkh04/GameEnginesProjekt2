@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        movement.Set(InputManager.Movement.x, InputManager.Movement.y);
+        movement.Set(InputManager.Movement.x, InputManager.Movement.y); 
         rb.velocity = movement * moveSpeed;
         animator.SetFloat(horizontal, movement.x);
         animator.SetFloat(vertical, movement.y);
