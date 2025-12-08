@@ -5073,7 +5073,9 @@ MonoBehaviour:
   inventoryPanel: {fileID: 1443806824}
   slotPrefab: {fileID: 8083036340963136264, guid: 38b9f1043c7fb4d6ba928016223e9fa4, type: 3}
   slotCount: 5
-  itemPrefabs: []
+  itemPrefabs:
+  - {fileID: 610102531676348543, guid: e8404de28a1a345a094305238a3e3190, type: 3}
+  - {fileID: 6654170960699358577, guid: 4e7a3b723f6714e31ab7eb2c36e3b3f1, type: 3}
 --- !u!1 &1039030134
 GameObject:
   m_ObjectHideFlags: 0
