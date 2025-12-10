@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         if (interactable != null)
         {
             currentInteractable = interactable;
-            Debug.Log("NPC in Reichweite! Drücke E zum Interagieren.");
+            Debug.Log("Interaktion in Reichweite! Drücke E zum Interagieren.");
         }
     }
 
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.GetComponent<IInteractable>() == currentInteractable)
         {
             currentInteractable = null;
-            Debug.Log("NPC verlassen.");
+            Debug.Log("Interaktion verlassen.");
         }
     }
 }
