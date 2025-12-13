@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SaveData
+
+public class InventorySaveData
 {
-    public Vector3 playerPos;
-    public List<InventorySaveData> inventorySaveData;
+   public int itemID;
+   public int slotIndex;
 }
