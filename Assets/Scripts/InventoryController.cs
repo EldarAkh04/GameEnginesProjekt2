@@ -14,16 +14,23 @@ public class InventoryController : MonoBehaviour
     void Start()
     {
         itemDictionary = FindObjectOfType<ItemDictionary>();
-        /* for(int i = 0; i < slotCount; i++)
+    }
+
+    public  bool AddItem(GameObject itemPrefab)
+    {
+        foreach(Transform slotTransform in inventoryPanel.transform)
         {
-            Slot slot = Instantiate(slotPrefab, inventoryPanel.transform).GetComponent<Slot>();
-            if(i < itemPrefabs.Length)
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if(slot != null && slot.currentItem == null)
             {
-                GameObject item = Instantiate(itemPrefabs[i], slot.transform);
-                item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-                slot.currentItem = item;
+                GameObject newItem =  Instantiate(itemPrefab, slotTransform);
+                newItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                slot.currentItem = newItem;
+                return true;
             }
-        } */
+        }
+        Debug.Log("Inv is full");
+        return false;
     }
 
     public List<InventorySaveData> GetInventoryItems()
