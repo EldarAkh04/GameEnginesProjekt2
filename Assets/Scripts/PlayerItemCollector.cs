@@ -10,7 +10,7 @@ public class PlayerItemCollector : MonoBehaviour
     {
         inventoryController = FindObjectOfType<InventoryController>();
     }
-    //Test
+    //Test2
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
