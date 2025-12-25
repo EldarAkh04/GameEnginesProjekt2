@@ -5582,6 +5582,7 @@ GameObject:
   - component: {fileID: 824569959}
   - component: {fileID: 824569960}
   - component: {fileID: 824569961}
+  - component: {fileID: 824569962}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5633,6 +5634,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb1e82653c70f4711b83866cc46fa4d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &824569962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824569957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf0d7479a46da84ea718c4adae2bda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &854975018
@@ -5893,6 +5906,70 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866171745}
   m_CullTransparentMesh: 1
+--- !u!1001 &1004614815
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3331632744226175310, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_Name
+      value: TeleportRock
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.7695236
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.6583588
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120194328868458983, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170512144365776878, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      propertyPath: nextLevelName
+      value: Scenes/Darkness
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3331632744226175310, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1570125036}
+  m_SourcePrefab: {fileID: 100100000, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
 --- !u!1 &1039030134
 GameObject:
   m_ObjectHideFlags: 0
@@ -6643,6 +6720,24 @@ Transform:
   - {fileID: 482902289}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1570125031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3331632744226175310, guid: 60a64ec5a0c5d27408b496386848c97f, type: 3}
+  m_PrefabInstance: {fileID: 1004614815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1570125036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570125031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c652f77edb94c039a5c4bdf053aba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Darkness
 --- !u!1 &1578139503
 GameObject:
   m_ObjectHideFlags: 0
@@ -7420,3 +7515,4 @@ SceneRoots:
   - {fileID: 233095457}
   - {fileID: 824569959}
   - {fileID: 16978264}
+  - {fileID: 1004614815}
