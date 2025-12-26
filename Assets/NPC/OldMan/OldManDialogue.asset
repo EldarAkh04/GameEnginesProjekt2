@@ -17,7 +17,7 @@ MonoBehaviour:
   dialogueLines:
   - Hallo Player8
   - Wie kann ich dir helfen?
-  autoProgressLines: 0101
+  autoProgressLines: 0100
   autoProgressDelay: 1.5
   typingSpeed: 0.05
   voiceSound: {fileID: 0}
