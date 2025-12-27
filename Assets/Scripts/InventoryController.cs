@@ -19,6 +19,25 @@ public class InventoryController : MonoBehaviour
 
     public  bool AddItem(GameObject itemPrefab)
     {
+
+        Item itemToAdd = itemPrefab.GetComponent<Item>();
+        if (itemToAdd == null)
+        {
+            return false;
+        }
+        foreach(Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if(slot != null && slot.currentItem != null)
+            {
+                Item slotItem = slot.currentItem.GetComponent<Item>();
+                if(slotItem != null && slotItem.ID == itemToAdd.ID)
+                {
+                    slotItem.AddToStack();
+                    return true;
+                }
+            }
+        }
         foreach(Transform slotTransform in inventoryPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
@@ -43,7 +62,11 @@ public class InventoryController : MonoBehaviour
             if(slot.currentItem != null)
             {
                 Item item = slot.currentItem.GetComponent<Item>();
-                invDate.Add(new InventorySaveData { itemID = item.ID, slotIndex = slotTransform.GetSiblingIndex()});
+                invDate.Add(new InventorySaveData { 
+                    itemID = item.ID, 
+                    slotIndex = slotTransform.GetSiblingIndex(),
+                    NItem = item.NItem
+                });
             }
         }
         return invDate;
@@ -68,6 +91,14 @@ public class InventoryController : MonoBehaviour
                 {
                     GameObject item = Instantiate(itemPrefab, slot.transform);
                     item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+                Item itemComponent = item.GetComponent<Item>();
+                if(itemComponent != null && data.NItem > 1)
+                {
+                    itemComponent.NItem = data.NItem;
+                    itemComponent.UpdateTextDisplay();
+                }
+
                     slot.currentItem = item;
                 }
             }
