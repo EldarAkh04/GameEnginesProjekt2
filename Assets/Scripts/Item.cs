@@ -10,10 +10,18 @@ public class Item : MonoBehaviour
     public int NItem = 1;
     private TMP_Text NItemText;
 
+    public int buyPrice = 10;
+    [Range (0, 1)] public float sellPrice = 0.5f;
+
     private void Awake()
     {
         NItemText = GetComponentInChildren<TMP_Text>();
         UpdateTextDisplay();
+    }
+
+    public int GetSellPrice()
+    {
+        return Mathf.RoundToInt(buyPrice * sellPrice);
     }
 
     public void UpdateTextDisplay()
