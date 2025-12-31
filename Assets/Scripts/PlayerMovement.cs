@@ -22,14 +22,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (ShopController.Instance != null && ShopController.Instance.shopPanel.activeSelf)
+        {
+            rb.velocity = Vector2.zero;
+            animator.SetFloat(horizontal, 0);
+            animator.SetFloat(vertical, 0);
+            
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                currentInteractable?.Interact();
+            }
+            return;
+        }
         movement.Set(InputManager.Movement.x, InputManager.Movement.y); 
         rb.velocity = movement * moveSpeed;
         animator.SetFloat(horizontal, movement.x);
         animator.SetFloat(vertical, movement.y);
-
-        if (Input.GetKeyDown(KeyCode.E)) // Du kannst jede gewünschte Taste wählen (z.B. E)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            // Prüft, ob ein interagierbares Objekt in Reichweite ist
             if (currentInteractable != null && currentInteractable.CanInteract())
             {
                 currentInteractable.Interact();

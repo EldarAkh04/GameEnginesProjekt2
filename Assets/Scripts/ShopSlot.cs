@@ -11,7 +11,7 @@ public class ShopSlot : MonoBehaviour
 
     public bool isShopSlot = true;
 
-    private void awake()
+    private void Awake()
     {
         if (!priceText)
         {

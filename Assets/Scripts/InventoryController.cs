@@ -6,6 +6,7 @@ public class InventoryController : MonoBehaviour
 {
     private ItemDictionary itemDictionary;
 
+    public static InventoryController Instance;
 
     public GameObject inventoryPanel;
     public GameObject slotPrefab;
