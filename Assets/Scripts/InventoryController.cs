@@ -17,6 +17,13 @@ public class InventoryController : MonoBehaviour
         itemDictionary = FindObjectOfType<ItemDictionary>();
     }
     
+    private void Awake()
+    {
+        if (Instance == null) 
+        {
+            Instance = this;
+        }
+    }
 
     public  bool AddItem(GameObject itemPrefab)
     {

@@ -18,8 +18,8 @@ public class ShopController : MonoBehaviour
 
     private void Awake()
     {
-        // Hier weist sich das Skript selbst der Instance zu
         if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     void Start()
@@ -41,7 +41,7 @@ public class ShopController : MonoBehaviour
         }
     }
 
-    public void openShop(ShopNPC shop)
+    public void OpenShop(ShopNPC shop)
     {
         currentShop = shop;
         shopPanel.SetActive(true);
@@ -91,6 +91,7 @@ public class ShopController : MonoBehaviour
         foreach(Transform child in playerInvGrid)
         {
             Destroy(child.gameObject);
+            Debug.Log("Test");
         }
         foreach(Transform slotTransfrom in InventoryController.Instance.inventoryPanel.transform)
         {

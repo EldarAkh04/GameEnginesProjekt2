@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShopNPC : MonoBehaviour, IInteractable
 {
 
-    public string shopID = "shop_merchant_01";
+    public string shopID = "shop_";
     public string shopkeeperName = "Eldaro";
 
     public List<ShopStockItem> defaultShopStock = new();
@@ -58,7 +58,7 @@ public class ShopNPC : MonoBehaviour, IInteractable
         }
         else
         {
-            ShopController.Instance.openShop(this);
+            ShopController.Instance.OpenShop(this);
         }
     }
 
