@@ -7,4 +7,22 @@ public class SaveData
 {
     public Vector3 playerPos;
     public List<InventorySaveData> inventorySaveData;
+    public int playerGold;
+    public List<ShopInstanceData> shopStates = new();
 }
+
+    [System.Serializable]
+
+    public class ShopInstanceData
+    {
+        public string shopID;
+        public List<ShopItemData> stock = new();
+    }
+
+    [System.Serializable]
+
+    public class ShopItemData
+    {
+        public int itemID; 
+        public int NItem;
+    }
