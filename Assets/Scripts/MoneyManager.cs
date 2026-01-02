@@ -35,7 +35,7 @@ public class MoneyManager : MonoBehaviour
         return false;
     }
 
-    private void AddGold(int amount)
+    public void AddGold(int amount)
     {
         playerGold += amount;
         OnGoldChanged?.Invoke(playerGold);

@@ -91,7 +91,7 @@ public class ShopController : MonoBehaviour
         foreach(Transform child in playerInvGrid)
         {
             Destroy(child.gameObject);
-            Debug.Log("Test");
+            //Debug.Log("Test");
         }
         foreach(Transform slotTransfrom in InventoryController.Instance.inventoryPanel.transform)
         {
@@ -128,5 +128,47 @@ public class ShopController : MonoBehaviour
             slot.isShopSlot = isShop;
             slot.SetItem(itemInstance, price);
         }
+
+        ItemDragHandler dragHandler = itemInstance.GetComponent<ItemDragHandler>();
+        if (dragHandler)
+        {
+            dragHandler.enabled = false;
+        }
+
+        ShopItemHandler shopItemHandler = itemInstance.GetComponent<ShopItemHandler>();
+
+        if (shopItemHandler != null) 
+        {
+            shopItemHandler.Initialise(isShop);
+            if (!isShop)
+            {
+                shopItemHandler.originalInventorySlot = originalSlot;
+            }
+        }
+    }
+
+    public void AddItemToShop(int itemID, int NItem)
+    {
+        if (!currentShop)
+        {
+            return;
+        }
+        currentShop.AddToStock(itemID, NItem);
+        RefreshShopDisplay();
+    }
+
+    public bool RemoveItemFromShop(int itemID, int NItem)
+    {
+        if (!currentShop)
+        {
+            return false;
+        }
+
+        bool success = currentShop.RemoveFromShopStock(itemID, NItem);
+        if (success)
+        {
+            RefreshShopDisplay();
+        }
+        return success;
     }
 }

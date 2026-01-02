@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8761895722038611360}
   - component: {fileID: -5640925663071285039}
   - component: {fileID: -1795481646037694612}
+  - component: {fileID: -3958825048538221720}
   m_Layer: 5
   m_Name: BookItem
   m_TagString: Item
@@ -118,6 +119,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 1
+  NItem: 1
+  buyPrice: 10
+  sellPrice: 0.5
 --- !u!212 &-5640925663071285039
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -205,6 +209,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!114 &-3958825048538221720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610102531676348543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5da68ecc83347b3841a00ba7267df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalInventorySlot: {fileID: 0}
 --- !u!1 &8016373335499328413
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,8 +256,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -20, y: 20}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchoredPosition: {x: -2.300003, y: 16.594002}
+  m_SizeDelta: {x: 23.6529, y: 33.1887}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8189285410851264315
 CanvasRenderer:
@@ -304,7 +321,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -333,7 +350,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -34.96466, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class InventoryController : MonoBehaviour
 {
     private ItemDictionary itemDictionary;
 
-    public static InventoryController Instance;
+    public static InventoryController Instance {get; private set;}
+    Dictionary<int, int> itemsCountCash = new();
+    public event Action OnInventoryChenged;
 
     public GameObject inventoryPanel;
     public GameObject slotPrefab;
@@ -15,6 +18,7 @@ public class InventoryController : MonoBehaviour
     void Start()
     {
         itemDictionary = FindObjectOfType<ItemDictionary>();
+        RebuildItemCounts();
     }
     
     private void Awake()
@@ -24,6 +28,26 @@ public class InventoryController : MonoBehaviour
             Instance = this;
         }
     }
+    public void RebuildItemCounts()
+    {
+        itemsCountCash.Clear();
+        foreach(Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if(slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+                if(item != null)
+                {
+                    itemsCountCash[item.ID] = itemsCountCash.GetValueOrDefault(item.ID, 0) + item.NItem;
+                }
+            }
+        }
+
+        OnInventoryChenged?.Invoke();
+    }
+
+    public Dictionary<int, int> GetItemCounts() => itemsCountCash;
 
     public  bool AddItem(GameObject itemPrefab)
     {
@@ -42,6 +66,7 @@ public class InventoryController : MonoBehaviour
                 if(slotItem != null && slotItem.ID == itemToAdd.ID)
                 {
                     slotItem.AddToStack();
+                    RebuildItemCounts();
                     return true;
                 }
             }
@@ -54,6 +79,7 @@ public class InventoryController : MonoBehaviour
                 GameObject newItem =  Instantiate(itemPrefab, slotTransform);
                 newItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 slot.currentItem = newItem;
+                RebuildItemCounts();
                 return true;
             }
         }
@@ -111,5 +137,6 @@ public class InventoryController : MonoBehaviour
                 }
             }
         }
+        RebuildItemCounts();
     }
 }

@@ -26,7 +26,10 @@ public class Item : MonoBehaviour
 
     public void UpdateTextDisplay()
     {
-        NItemText.text = NItem > 1 ? NItem.ToString() : "";
+        if (NItemText != null) 
+        {
+            NItemText.text = NItem > 1 ? NItem.ToString() : "";
+        }
     }
 
     public void AddToStack(int amount = 1)
