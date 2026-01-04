@@ -23,7 +23,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (ShopController.Instance != null && ShopController.Instance.shopPanel.activeSelf)
+        if (rb == null || animator == null) return;
+        bool isShopOpen = false;
+        if (ShopController.Instance != null && ShopController.Instance.shopPanel != null)
+        {
+            isShopOpen = ShopController.Instance.shopPanel.activeSelf;
+        }
+
+        if (isShopOpen)
         {
             rb.velocity = Vector2.zero;
             animator.SetFloat(horizontal, 0);
