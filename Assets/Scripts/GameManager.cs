@@ -10,28 +10,27 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-         // Singleton-Muster implementieren
-         if (instance == null)
-         {
-              instance = this;
-              DontDestroyOnLoad(gameObject); // Behalte das GameManager-Objekt beim Szenenwechsel
-         }
-         else
-         {
-              Destroy(gameObject); // Verhindere Duplikate
-         }
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(transform.root.gameObject); 
+        }
+        else
+        {
+            Destroy(transform.root.gameObject); 
+        }
     }
 
     public void ChangeLevelTo(string levelName)
     {
-        StartCoroutine(ChangeLevelCo(levelName));
+        //StartCoroutine(ChangeLevelCo(levelName));
         Debug.Log("Wechsel zu Level: " + levelName);
     }
 
-    private IEnumerator ChangeLevelCo(string levelName)
+    /* private IEnumerator ChangeLevelCo(string levelName)
     {
         GetFadeUI().DoFadeOut();
-        yield return GetFadeUI().fadeEffectCo; // Wartezeit für den Effekt
+        yield return GetFadeUI().fadeEffectCo; // Wartezeit fï¿½r den Effekt
         SceneManager.LoadScene(levelName);
     }
 
@@ -41,5 +40,5 @@ public class GameManager : MonoBehaviour
             fadeUI = FindObjectOfType<UI_Fade>();
     
         return fadeUI;
-    }
+    } */
 }
