@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -42,8 +43,25 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("Speed", 0); 
             return; // Hier bricht Update ab -> Keine Bewegung wird berechnet
         }
-        // ---------------------------------------------------
+        if (rb == null || animator == null) return;
+        bool isShopOpen = false;
+        if (ShopController.Instance != null && ShopController.Instance.shopPanel != null)
+        {
+            isShopOpen = ShopController.Instance.shopPanel.activeSelf;
+        }
 
+        if (isShopOpen)
+        {
+            rb.velocity = Vector2.zero;
+            animator.SetFloat(horizontal, 0);
+            animator.SetFloat(vertical, 0);
+            
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                currentInteractable?.Interact();
+            }
+            return;
+        }
         movement.Set(InputManager.Movement.x, InputManager.Movement.y); 
         rb.velocity = movement * moveSpeed;
         
@@ -52,7 +70,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Speed", movement.sqrMagnitude);
 
         // Interagieren
-        if (Input.GetKeyDown(KeyCode.E)) 
+
+        if (Input.GetKeyDown(KeyCode.E)) // Du kannst jede gewünschte Taste wählen (z.B. E)
         {
             if (currentInteractable != null && currentInteractable.CanInteract())
             {
@@ -115,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
         if (interactable != null)
         {
             currentInteractable = interactable;
+            Debug.Log("Interaktion in Reichweite! Drücke E zum Interagieren.");
         }
     }
 
@@ -123,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.GetComponent<IInteractable>() == currentInteractable)
         {
             currentInteractable = null;
+            Debug.Log("Interaktion verlassen.");
         }
     }
 }
