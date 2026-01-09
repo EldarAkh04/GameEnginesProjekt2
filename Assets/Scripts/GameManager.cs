@@ -8,8 +8,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     private UI_Fade fadeUI;
 
+    //Health
+    [SerializeField] private float startingHealth;
+    public float currentHealth { get; private set; }
+
     private void Awake()
     {
+        currentHealth = startingHealth;
         if (instance == null)
         {
             instance = this;
@@ -41,4 +46,14 @@ public class GameManager : MonoBehaviour
     
         return fadeUI;
     } */
+
+    public void ChangeHealth(float amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, startingHealth);
+        if (currentHealth <= 0)
+        {
+            // Game Over logic here
+            Debug.Log("Game Over!");
+        }
+    }
 }
