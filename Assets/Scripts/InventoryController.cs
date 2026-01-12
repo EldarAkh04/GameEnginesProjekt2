@@ -200,4 +200,33 @@ public class InventoryController : MonoBehaviour
         persistentData = inventorySaveData;
         RebuildItemCounts();
     }
+
+    public void UseItem(int id)
+    {
+        if (id != 1 && id != 3) 
+        {
+            Debug.Log("Nix passiert");
+            return;
+        }
+        foreach (Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if (slot != null && slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item != null && item.ID == id)
+                {
+                    item.RemoveToStack(1);
+                    if (item.NItem <= 0)
+                    {
+                        Destroy(slot.currentItem);
+                        slot.currentItem = null;
+                    }
+                    RebuildItemCounts();
+                    SaveInventoryToData();
+                    return;
+                }
+            }
+        }
+    }
 }
