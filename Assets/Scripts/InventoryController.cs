@@ -11,7 +11,7 @@ public class InventoryController : MonoBehaviour
     Dictionary<int, int> itemsCountCash = new();
     public event Action OnInventoryChenged;
 
-    public GameObject inventoryPanel;
+    [SerializeField] private GameObject inventoryPanel;
     public GameObject slotPrefab;
     public int slotCount;
     public GameObject[] itemPrefabs;
@@ -51,6 +51,23 @@ public class InventoryController : MonoBehaviour
         itemDictionary = FindObjectOfType<ItemDictionary>();
         RebuildItemCounts();
     }
+<<<<<<< Updated upstream
+=======
+
+    void Awake()
+    {
+        // Das gesamte Menü-System als Singleton
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Das Objekt wird nicht gelöscht
+        }
+        else
+        {
+            Destroy(gameObject); // Verhindert doppelte Menüs
+        }
+    }
+>>>>>>> Stashed changes
 
     public void RebuildItemCounts()
     {
