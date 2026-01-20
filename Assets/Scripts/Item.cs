@@ -13,6 +13,7 @@ public class Item : MonoBehaviour, IPointerClickHandler
 
     public int buyPrice = 10;
     [Range (0, 1)] public float sellPrice = 0.5f;
+    public bool itemInInv = false;
 
     private void Awake()
     {
@@ -57,7 +58,7 @@ public class Item : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (InventoryController.Instance != null)
+        if (itemInInv && InventoryController.Instance != null)
         {
             if(GameManager.instance.currentHealth != GameManager.instance.startingHealth && this.ID ==3){
                 InventoryController.Instance.UseItem(this.ID);

@@ -83,7 +83,6 @@ public class InventoryController : MonoBehaviour
     {
         Item itemToAdd = itemPrefab.GetComponent<Item>();
         if (itemToAdd == null) return false;
-
         foreach(Transform slotTransform in inventoryPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
@@ -92,6 +91,7 @@ public class InventoryController : MonoBehaviour
                 Item slotItem = slot.currentItem.GetComponent<Item>();
                 if(slotItem != null && slotItem.ID == itemToAdd.ID)
                 {
+                    slotItem.itemInInv = true;
                     slotItem.AddToStack();
                     RebuildItemCounts();
                     SaveInventoryToData();
@@ -106,8 +106,13 @@ public class InventoryController : MonoBehaviour
             if(slot != null && slot.currentItem == null)
             {
                 GameObject newItem = Instantiate(itemPrefab, slotTransform);
+                Item newItemScript = newItem.GetComponent<Item>();
+                if(newItemScript != null) 
+                {
+                    newItemScript.itemInInv = true;
+                }
+
                 RectTransform rect = newItem.GetComponent<RectTransform>();
-                
                 rect.localPosition = new Vector3(0, 0, 0); 
                 rect.localScale = Vector3.one;
                 rect.anchoredPosition = Vector2.zero;
@@ -181,7 +186,6 @@ public class InventoryController : MonoBehaviour
                         GameObject item = Instantiate(itemPrefab, slot.transform);
                         RectTransform rect = item.GetComponent<RectTransform>();
                         
-                        // ZWINGE DIE POSITION AUF 0
                         rect.localScale = Vector3.one;
                         rect.localPosition = new Vector3(0, 0, 0); 
                         rect.anchoredPosition = Vector2.zero;
@@ -189,6 +193,7 @@ public class InventoryController : MonoBehaviour
                         Item itemComponent = item.GetComponent<Item>();
                         if (itemComponent != null)
                         {
+                            itemComponent.itemInInv = true;
                             itemComponent.NItem = data.NItem;
                             itemComponent.UpdateTextDisplay();
                         }
