@@ -59,17 +59,25 @@ public class Item : MonoBehaviour, IPointerClickHandler
     {
         if (InventoryController.Instance != null)
         {
-            InventoryController.Instance.UseItem(this.ID);
-            Debug.Log("Effect");
+            if(GameManager.instance.currentHealth != GameManager.instance.startingHealth && this.ID ==3){
+                InventoryController.Instance.UseItem(this.ID);
+                InventoryController.Instance.UsePotionItem(this.ID);
+                Debug.Log("Effect");
+            }
+            else if(this.ID == 1)
+            {
+                InventoryController.Instance.UseItem(this.ID);
+                Debug.Log("Power up");
+            }   
         }
-        if (ID == 1 && ID == 3)
+        /* if (ID == 1 && ID == 3)
         {
             PerformSpecialAction();
-        }
+        } */
     }
 
-    private void PerformSpecialAction()
+   /*  private void PerformSpecialAction()
     {
         Debug.Log("Spezialaktion für ID 1 ausgeführt (z.B. Heilungseffekt).");
-    }
+    } */
 }

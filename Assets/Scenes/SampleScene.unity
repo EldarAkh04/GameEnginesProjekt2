@@ -4857,9 +4857,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 2
+  m_MaxValue: 7
   m_WholeNumbers: 1
-  m_Value: 2
+  m_Value: 7
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6089,7 +6089,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3634596057435234344, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
       propertyPath: startingHealth
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4037355636436179750, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
       propertyPath: m_AnchorMax.y

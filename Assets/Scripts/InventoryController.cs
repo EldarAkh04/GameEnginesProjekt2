@@ -229,4 +229,15 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
+    public void UsePotionItem(int id) 
+    {
+        if(id == 3)
+        {
+            if(GameManager.instance != null)
+            {
+                GameManager.instance.HealPlayer();
+                Debug.Log("Heilung durchgeführt!");
+            }
+        }
+    }
 }

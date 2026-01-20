@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private UI_Fade fadeUI;
 
     //Health
-    [SerializeField] private float startingHealth;
+    [SerializeField] public float startingHealth = 2.0f;
     public float currentHealth { get; private set; }
 
     private void Awake()
@@ -55,5 +55,10 @@ public class GameManager : MonoBehaviour
             // Game Over logic here
             Debug.Log("Game Over!");
         }
+    }
+
+    public void HealPlayer()
+    {
+        currentHealth += 1;
     }
 }

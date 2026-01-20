@@ -5770,7 +5770,7 @@ MonoBehaviour:
   checkRadius: 5
   attackRadius: 0.5
   damage: 1
-  attackCooldown: 1.5
+  attackCooldown: 3
   player: {fileID: 742385808}
 --- !u!50 &782764104
 Rigidbody2D:
