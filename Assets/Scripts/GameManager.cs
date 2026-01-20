@@ -67,4 +67,14 @@ public class GameManager : MonoBehaviour
         startingHealth += 1;
         currentHealth += 1;
     }
+
+    // Im GameManager.cs hinzufügen
+    public void LoadHealthData(float health, float maxHealth)
+    {
+    startingHealth = maxHealth;
+    currentHealth = health;
+
+    // Wichtig: Falls du die HealthBar direkt aktualisieren willst, 
+    // falls diese nicht nur über Update() läuft.
+    }
 }
