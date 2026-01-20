@@ -61,4 +61,10 @@ public class GameManager : MonoBehaviour
     {
         currentHealth += 1;
     }
+
+    public void PoweUpPlayer()
+    {
+        startingHealth += 1;
+        currentHealth += 1;
+    }
 }

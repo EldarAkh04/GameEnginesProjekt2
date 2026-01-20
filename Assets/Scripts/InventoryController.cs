@@ -240,4 +240,15 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
+
+    public void UsePowerUpItem(int id)
+    {
+        if(id == 1)
+        {
+            if(GameManager.instance != null)
+            {
+                GameManager.instance.PoweUpPlayer();
+            }
+        }
+    }
 }

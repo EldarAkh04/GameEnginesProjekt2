@@ -67,6 +67,7 @@ public class Item : MonoBehaviour, IPointerClickHandler
             else if(this.ID == 1)
             {
                 InventoryController.Instance.UseItem(this.ID);
+                InventoryController.Instance.UsePowerUpItem(this.ID);
                 Debug.Log("Power up");
             }   
         }
