@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, IPointerClickHandler
 {
     public int ID;
     public int NItem = 1;
@@ -53,5 +54,22 @@ public class Item : MonoBehaviour
         cloneItem.NItem = newItem;
         cloneItem.UpdateTextDisplay();
         return clone;
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (InventoryController.Instance != null)
+        {
+            InventoryController.Instance.UseItem(this.ID);
+            Debug.Log("Effect");
+        }
+        if (ID == 1 && ID == 3)
+        {
+            PerformSpecialAction();
+        }
+    }
+
+    private void PerformSpecialAction()
+    {
+        Debug.Log("Spezialaktion für ID 1 ausgeführt (z.B. Heilungseffekt).");
     }
 }

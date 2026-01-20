@@ -74,6 +74,12 @@ public class ShopNPC : MonoBehaviour, IInteractable
 
     public void AddToStock(int itemID, int NItem)
     {
+        if (itemID == 2)
+        {
+            Debug.Log("Item löschen");
+            return; 
+        }
+
         ShopStockItem existing = currentShopStock.Find(s => s.itemID == itemID);
         if(existing != null)
         {
@@ -84,13 +90,17 @@ public class ShopNPC : MonoBehaviour, IInteractable
             currentShopStock.Add(new ShopStockItem{itemID = itemID, NItem = NItem});
         }
     }
-
     public bool RemoveFromShopStock(int itemID, int NItem)
     {
-        ShopStockItem existing = currentShopStock.Find(s => s.itemID == itemID);
-        if(existing != null && existing.NItem >= NItem)
+        var item = currentShopStock.Find(x => x.itemID == itemID);
+        
+        if (item != null)
         {
-            existing.NItem -= NItem;
+            item.NItem -= NItem;
+            if (itemID == 2 || item.NItem <= 0)
+            {
+                currentShopStock.Remove(item);
+            }
             return true;
         }
         return false;
