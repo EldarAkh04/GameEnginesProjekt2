@@ -89,21 +89,24 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
     void Attack()
     {
-        // --- NEU: Angriff markieren und Timer starten ---
+        // 1. Angriff starten
         isAttacking = true;
         StartCoroutine(EndAttackDelay());
-        // ------------------------------------------------
-
         animator.SetTrigger("Attack");
 
+        // 2. Gegner treffen
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
+        // 3. Schaden austeilen
         foreach(Collider2D enemy in hitEnemies)
         {
-            Debug.Log("Wir haben " + enemy.name + " getroffen!");
+            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(20);
+            }
         }
     }
 
