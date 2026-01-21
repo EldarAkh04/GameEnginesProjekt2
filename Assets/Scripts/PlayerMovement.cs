@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
     public float attackRate = 2f;
+    public int attackDamage = 20; // <--- NEU: Hier kannst du den Schaden einstellen!
     private float nextAttackTime = 0f;
 
     // --- NEU: Einstellungen für den Bewegungs-Stopp ---
@@ -105,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
             EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(20);
+                enemyHealth.TakeDamage(attackDamage);
             }
         }
     }
