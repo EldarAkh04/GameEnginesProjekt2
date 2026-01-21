@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // --- NEU: Die Uhr, die wartet, bis der Schlag vorbei ist ---
+    // --- NEU: Die Uhr, die wartet, bis der Schlag vorbei ist ----
     IEnumerator EndAttackDelay()
     {
         // Wartet so viele Sekunden, wie du bei attackDuration eingestellt hast
