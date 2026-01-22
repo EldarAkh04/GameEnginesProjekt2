@@ -54,16 +54,16 @@ public class InventoryController : MonoBehaviour
 
     void Awake()
     {
-        // Das gesamte Menü-System als Singleton
         if (Instance == null)
         {
-            
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Das Objekt wird nicht gelöscht
+            transform.SetParent(null); 
+
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); // Verhindert doppelte Menüs
+            Destroy(gameObject);
         }
     }
 
