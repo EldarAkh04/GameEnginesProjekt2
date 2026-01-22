@@ -11,14 +11,14 @@ public class InventoryController : MonoBehaviour
     Dictionary<int, int> itemsCountCash = new();
     public event Action OnInventoryChenged;
 
-    public GameObject inventoryPanel;
+    [SerializeField] public GameObject inventoryPanel;
     public GameObject slotPrefab;
     public int slotCount;
     public GameObject[] itemPrefabs;
 
     private List<InventorySaveData> persistentData = new List<InventorySaveData>();
 
-    private void Awake()
+    /* private void Awake()
     {
         if (Instance == null) 
         {
@@ -28,7 +28,7 @@ public class InventoryController : MonoBehaviour
         else {
             Destroy(gameObject);
         }
-    }
+    } */
 
     private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
     private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -50,6 +50,21 @@ public class InventoryController : MonoBehaviour
     {
         itemDictionary = FindObjectOfType<ItemDictionary>();
         RebuildItemCounts();
+    }
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            transform.SetParent(null); 
+
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void RebuildItemCounts()
@@ -83,7 +98,6 @@ public class InventoryController : MonoBehaviour
     {
         Item itemToAdd = itemPrefab.GetComponent<Item>();
         if (itemToAdd == null) return false;
-
         foreach(Transform slotTransform in inventoryPanel.transform)
         {
             Slot slot = slotTransform.GetComponent<Slot>();
@@ -92,6 +106,7 @@ public class InventoryController : MonoBehaviour
                 Item slotItem = slot.currentItem.GetComponent<Item>();
                 if(slotItem != null && slotItem.ID == itemToAdd.ID)
                 {
+                    slotItem.itemInInv = true;
                     slotItem.AddToStack();
                     RebuildItemCounts();
                     SaveInventoryToData();
@@ -106,8 +121,13 @@ public class InventoryController : MonoBehaviour
             if(slot != null && slot.currentItem == null)
             {
                 GameObject newItem = Instantiate(itemPrefab, slotTransform);
+                Item newItemScript = newItem.GetComponent<Item>();
+                if(newItemScript != null) 
+                {
+                    newItemScript.itemInInv = true;
+                }
+
                 RectTransform rect = newItem.GetComponent<RectTransform>();
-                
                 rect.localPosition = new Vector3(0, 0, 0); 
                 rect.localScale = Vector3.one;
                 rect.anchoredPosition = Vector2.zero;
@@ -181,7 +201,6 @@ public class InventoryController : MonoBehaviour
                         GameObject item = Instantiate(itemPrefab, slot.transform);
                         RectTransform rect = item.GetComponent<RectTransform>();
                         
-                        // ZWINGE DIE POSITION AUF 0
                         rect.localScale = Vector3.one;
                         rect.localPosition = new Vector3(0, 0, 0); 
                         rect.anchoredPosition = Vector2.zero;
@@ -189,6 +208,7 @@ public class InventoryController : MonoBehaviour
                         Item itemComponent = item.GetComponent<Item>();
                         if (itemComponent != null)
                         {
+                            itemComponent.itemInInv = true;
                             itemComponent.NItem = data.NItem;
                             itemComponent.UpdateTextDisplay();
                         }
@@ -199,5 +219,56 @@ public class InventoryController : MonoBehaviour
         }
         persistentData = inventorySaveData;
         RebuildItemCounts();
+    }
+
+    public void UseItem(int id)
+    {
+        if (id != 1 && id != 3) 
+        {
+            Debug.Log("Nix passiert");
+            return;
+        }
+        foreach (Transform slotTransform in inventoryPanel.transform)
+        {
+            Slot slot = slotTransform.GetComponent<Slot>();
+            if (slot != null && slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item != null && item.ID == id)
+                {
+                    item.RemoveToStack(1);
+                    if (item.NItem <= 0)
+                    {
+                        Destroy(slot.currentItem);
+                        slot.currentItem = null;
+                    }
+                    RebuildItemCounts();
+                    SaveInventoryToData();
+                    return;
+                }
+            }
+        }
+    }
+    public void UsePotionItem(int id) 
+    {
+        if(id == 3)
+        {
+            if(GameManager.instance != null)
+            {
+                GameManager.instance.HealPlayer();
+                Debug.Log("Heilung durchgeführt!");
+            }
+        }
+    }
+
+    public void UsePowerUpItem(int id)
+    {
+        if(id == 1)
+        {
+            if(GameManager.instance != null)
+            {
+                GameManager.instance.PoweUpPlayer();
+            }
+        }
     }
 }

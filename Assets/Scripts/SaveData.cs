@@ -9,6 +9,8 @@ public class SaveData
     public List<InventorySaveData> inventorySaveData;
     public int playerGold;
     public List<ShopInstanceData> shopStates = new();
+    public float currentHealth;
+    public float startingHealth;
 }
 
     [System.Serializable]
