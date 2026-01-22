@@ -8,8 +8,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     private UI_Fade fadeUI;
 
+    //Health
+    [SerializeField] public float startingHealth = 2.0f;
+    public float currentHealth { get; private set; }
+
     private void Awake()
     {
+        currentHealth = startingHealth;
         if (instance == null)
         {
             instance = this;
@@ -41,4 +46,35 @@ public class GameManager : MonoBehaviour
     
         return fadeUI;
     } */
+
+    public void ChangeHealth(float amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, startingHealth);
+        if (currentHealth <= 0)
+        {
+            // Game Over logic here
+            Debug.Log("Game Over!");
+        }
+    }
+
+    public void HealPlayer()
+    {
+        currentHealth += 1;
+    }
+
+    public void PoweUpPlayer()
+    {
+        startingHealth += 1;
+        currentHealth += 1;
+    }
+
+    // Im GameManager.cs hinzufügen
+    public void LoadHealthData(float health, float maxHealth)
+    {
+    startingHealth = maxHealth;
+    currentHealth = health;
+
+    // Wichtig: Falls du die HealthBar direkt aktualisieren willst, 
+    // falls diese nicht nur über Update() läuft.
+    }
 }

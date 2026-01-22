@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, IPointerClickHandler
 {
     public int ID;
     public int NItem = 1;
@@ -12,6 +13,7 @@ public class Item : MonoBehaviour
 
     public int buyPrice = 10;
     [Range (0, 1)] public float sellPrice = 0.5f;
+    public bool itemInInv = false;
 
     private void Awake()
     {
@@ -54,4 +56,30 @@ public class Item : MonoBehaviour
         cloneItem.UpdateTextDisplay();
         return clone;
     }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (itemInInv && InventoryController.Instance != null)
+        {
+            if(GameManager.instance.currentHealth != GameManager.instance.startingHealth && this.ID ==3){
+                InventoryController.Instance.UseItem(this.ID);
+                InventoryController.Instance.UsePotionItem(this.ID);
+                Debug.Log("Effect");
+            }
+            else if(this.ID == 1)
+            {
+                InventoryController.Instance.UseItem(this.ID);
+                InventoryController.Instance.UsePowerUpItem(this.ID);
+                Debug.Log("Power up");
+            }   
+        }
+        /* if (ID == 1 && ID == 3)
+        {
+            PerformSpecialAction();
+        } */
+    }
+
+   /*  private void PerformSpecialAction()
+    {
+        Debug.Log("Spezialaktion für ID 1 ausgeführt (z.B. Heilungseffekt).");
+    } */
 }

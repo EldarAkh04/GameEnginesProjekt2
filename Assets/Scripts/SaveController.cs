@@ -25,7 +25,9 @@ public class SaveController : MonoBehaviour
             playerPos = GameObject.FindGameObjectWithTag("Player").transform.position,
             inventorySaveData = inventoryController.GetInventoryItems(),
             playerGold = MoneyManager.Instance.GetGold(), 
-            shopStates = GetShopStates()
+            shopStates = GetShopStates(),
+            currentHealth = GameManager.instance.currentHealth,
+            startingHealth = GameManager.instance.startingHealth
         };
 
         File.WriteAllText(saveLoc, JsonUtility.ToJson(saveData));
@@ -65,6 +67,10 @@ public class SaveController : MonoBehaviour
 
             LoadShopStates(saveData.shopStates);
             MoneyManager.Instance.SetGold(saveData.playerGold);
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.LoadHealthData(saveData.currentHealth, saveData.startingHealth);
+            }
         }
     }
 
