@@ -1,33 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class EnemyAI : MonoBehaviour
 {
     [Header("Settings")]
     public float speed = 2.0f;
-    public float checkRadius = 5.0f; // How close player must be to start chasing
-    public float attackRadius = 0.3f; // How close to stop and attack
+    public float checkRadius = 5.0f; 
+    public float attackRadius = 0.8f; // Etwas größer machen, damit er nicht in den Spieler reinkriecht
 
     [Header("Attack Settings")]
-    public int damage = 1;     // How much damage to deal
-    public float attackCooldown = 1.5f; // How many seconds between attacks
-    private float lastAttackTime;    // Timer to track cooldown
+    public int damage = 10;     
+    public float attackCooldown = 1.5f; 
+    private float lastAttackTime;    
+
+    [Header("Knockback Settings")]
+    public float knockbackForce = 10f; // Wie stark fliegt er zurück?
+    public float knockbackDuration = 0.2f; // Wie lange kann er sich nicht bewegen?
 
     [Header("References")]
-    public Transform player; // Drag Player here or let script find it
+    public Transform player; 
     private Rigidbody2D rb;
     private Vector2 movement;
-    private Animator anim; // If you have animations later
     private SpriteRenderer spriteRenderer;
+
+    // Zustands-Variablen
+    private bool isKnockedBack = false;
+    private bool canMove = true;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Auto-find player if you forgot to drag it in
-        if (player == null)
+        if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
@@ -35,27 +41,30 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if(player == null) return;
+        // Wenn wir zurückgestoßen werden, darf keine normale Bewegung berechnet werden
+        if(player == null || isKnockedBack) return;
 
         float distance = Vector2.Distance(transform.position, player.position);
 
-        // 2. Only chase if inside the radius but outside attack range
+        // Bewegung berechnen
         if (distance <= checkRadius && distance > attackRadius)
         {
             Vector3 direction = player.position - transform.position;
-            direction.Normalize(); // Fixes diagonal speed issues
+            direction.Normalize(); 
             movement = direction;
             
-            // Simple Sprite Flip (Optional)
-            if (direction.x < 0) spriteRenderer.flipX = true; // Face Left
-            else spriteRenderer.flipX = false; // Face Right
-        } else if (distance <= attackRadius)
+            // Sprite Flip
+            if (direction.x < 0) spriteRenderer.flipX = true; 
+            else spriteRenderer.flipX = false; 
+        } 
+        else if (distance <= attackRadius)
         {
+            // Stop movement to attack
             movement = Vector2.zero; 
-
+            
             if (Time.time > lastAttackTime + attackCooldown)
             {
-                player.GetComponent<Health>().TakeDamage(damage);
+                AttackPlayer();
                 lastAttackTime = Time.time;
             }
         }
@@ -67,21 +76,58 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveCharacter(movement);
+        // Nur bewegen, wenn NICHT im Knockback
+        if (!isKnockedBack && canMove)
+        {
+            moveCharacter(movement);
+        }
     }
 
     void moveCharacter(Vector2 direction)
     {
-        // rb.MovePosition is better for physics (collisions) than transform.Translate
-        rb.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
+        rb.MovePosition((Vector2)transform.position + (direction * speed * Time.fixedDeltaTime));
     }
 
-    // VISUALIZES THE RANGES IN THE EDITOR
+    void AttackPlayer()
+    {
+        // Hier später: Animation abspielen (anim.SetTrigger("Attack"))
+        
+        // Schaden verursachen
+        if(player.GetComponent<Health>() != null)
+        {
+            player.GetComponent<Health>().TakeDamage(damage);
+        }
+    }
+
+    // --- NEU: Knockback Funktion ---
+    // Diese wird vom EnemyHealth Skript aufgerufen
+    public void ApplyKnockback(Vector2 direction)
+    {
+        if(isKnockedBack) return; // Nicht doppelt machen
+
+        StartCoroutine(KnockbackRoutine(direction));
+    }
+
+    IEnumerator KnockbackRoutine(Vector2 direction)
+    {
+        isKnockedBack = true;
+        
+        // Physikalischen Impuls geben (Ruck nach hinten)
+        rb.velocity = Vector2.zero; // Aktuelle Bewegung stoppen
+        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+
+        // Warten (während der Gegner fliegt)
+        yield return new WaitForSeconds(knockbackDuration);
+
+        // Wieder normalisieren
+        rb.velocity = Vector2.zero; // Rutschen stoppen
+        isKnockedBack = false;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, checkRadius);
-        
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
     }

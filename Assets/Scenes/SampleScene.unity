@@ -4950,6 +4950,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   attackRate: 2
+  attackDamage: 30
   attackDuration: 0.4
 --- !u!61 &742385806
 BoxCollider2D:
