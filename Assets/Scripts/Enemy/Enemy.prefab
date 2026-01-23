@@ -302,8 +302,8 @@ MonoBehaviour:
   attackRadius: 0.5
   damage: 1
   attackCooldown: 1
-  knockbackForce: 5
-  knockbackDuration: 0.2
+  knockbackForce: 3
+  knockbackDuration: 0.1
   player: {fileID: 0}
 --- !u!50 &7410570579817359632
 Rigidbody2D:
@@ -318,7 +318,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 4
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

@@ -5673,7 +5673,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 1495600362}
   - {fileID: 186766446}
-  spawnInterval: 3
+  spawnInterval: 10
   difficultyIncreaseInterval: 10
   baseHealth: 20
   healthIncrease: 20
