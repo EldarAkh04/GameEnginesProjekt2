@@ -92,31 +92,31 @@ public class PlayerMovement : MonoBehaviour
     }
     void Attack()
     {
-        // 1. Angriff starten
+        // 1. Angriff markieren
         isAttacking = true;
         StartCoroutine(EndAttackDelay());
         animator.SetTrigger("Attack");
 
-        // 2. Gegner treffen
+        // 2. Alle Gegner im Kreis finden
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
         // 3. Schaden austeilen
         foreach(Collider2D enemy in hitEnemies)
         {
-            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
+            // --- VERSUCH 1: Ist es ein normaler Gegner? ---
+            EnemyHealth normalHealth = enemy.GetComponent<EnemyHealth>();
+            if (normalHealth != null)
             {
-                enemyHealth.TakeDamage(attackDamage, transform);
+                normalHealth.TakeDamage(attackDamage, transform);
+            }
+
+            // --- VERSUCH 2: Ist es ein Tank? ---
+            TankHealth tankHealth = enemy.GetComponent<TankHealth>();
+            if (tankHealth != null)
+            {
+                tankHealth.TakeDamage(attackDamage, transform);
             }
         }
-    }
-
-    // --- NEU: Die Uhr, die wartet, bis der Schlag vorbei ist ----
-    IEnumerator EndAttackDelay()
-    {
-        // Wartet so viele Sekunden, wie du bei attackDuration eingestellt hast
-        yield return new WaitForSeconds(attackDuration);
-        isAttacking = false; // Jetzt darf er sich wieder bewegen
     }
     // -----------------------------------------------------------
 
@@ -149,5 +149,12 @@ public class PlayerMovement : MonoBehaviour
             currentInteractable = null;
             Debug.Log("Interaktion verlassen.");
         }
+    }
+
+    // Das ist der Timer, der gefehlt hat!
+    IEnumerator EndAttackDelay()
+    {
+        yield return new WaitForSeconds(attackDuration);
+        isAttacking = false;
     }
 }

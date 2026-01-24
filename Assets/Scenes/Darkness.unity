@@ -5450,7 +5450,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
-  attackRate: 2
+  attackRate: 1.5
   attackDamage: 20
   attackDuration: 0.4
 --- !u!61 &742385806
@@ -5669,14 +5669,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7751ef7124d3e437c8418284c1b621f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8461078566306181884, guid: 00c7e0f612f4a4173970e72d90c83a65, type: 3}
+  enemyPrefabs:
+  - {fileID: 8461078566306181884, guid: 34425992cf87a43699ad60cf013691c5, type: 3}
+  - {fileID: 8461078566306181884, guid: 00c7e0f612f4a4173970e72d90c83a65, type: 3}
   spawnPoints:
   - {fileID: 1495600362}
   - {fileID: 186766446}
-  spawnInterval: 10
-  difficultyIncreaseInterval: 10
-  baseHealth: 20
-  healthIncrease: 20
+  spawnInterval: 4
+  difficultyIncreaseInterval: 40
+  baseHealth: 30
+  healthIncrease: 10
 --- !u!4 &1083011137
 Transform:
   m_ObjectHideFlags: 0
@@ -5686,7 +5688,7 @@ Transform:
   m_GameObject: {fileID: 1083011135}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -0.73, z: 0}
+  m_LocalPosition: {x: -0.89, y: -0.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5803,7 +5805,7 @@ Transform:
   m_GameObject: {fileID: 1495600361}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.8, y: 1.07, z: 0}
+  m_LocalPosition: {x: -3.14, y: -0.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

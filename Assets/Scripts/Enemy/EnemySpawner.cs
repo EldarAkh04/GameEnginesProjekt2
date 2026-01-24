@@ -5,16 +5,17 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Was soll gespawnt werden?")]
-    public GameObject enemyPrefab; // Zieh hier dein Enemy-Prefab rein
-    public Transform[] spawnPoints; // Orte, wo Gegner erscheinen
+    // Die eckigen Klammern [] machen daraus eine Liste für den Inspector!
+    public GameObject[] enemyPrefabs; 
+    public Transform[] spawnPoints; 
 
     [Header("Zeit-Einstellungen")]
-    public float spawnInterval = 3.0f; // Alle 3 Sekunden ein neuer Gegner
-    public float difficultyIncreaseInterval = 30.0f; // Alle 30 Sekunden werden sie stärker
+    public float spawnInterval = 3.0f; 
+    public float difficultyIncreaseInterval = 30.0f; 
 
     [Header("Stärke-Einstellungen")]
-    public int baseHealth = 20; // Start-Leben (1 Schlag bei 20 Schaden)
-    public int healthIncrease = 20; // Wie viel Leben kommt dazu? (20 = +1 Schlag)
+    public int baseHealth = 20; 
+    public int healthIncrease = 20; 
     
     private int currentEnemyHealth;
     private float nextSpawnTime = 0f;
@@ -22,23 +23,18 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        // Am Anfang haben Gegner das Basis-Leben
         currentEnemyHealth = baseHealth;
-        
-        // Die erste Schwierigkeits-Erhöhung planen
         nextDifficultyTime = Time.time + difficultyIncreaseInterval;
     }
 
     void Update()
     {
-        // 1. Gegner Spawnen
         if (Time.time >= nextSpawnTime)
         {
             SpawnEnemy();
             nextSpawnTime = Time.time + spawnInterval;
         }
 
-        // 2. Schwierigkeit erhöhen (Mit der Zeit stärker werden)
         if (Time.time >= nextDifficultyTime)
         {
             IncreaseDifficulty();
@@ -48,35 +44,45 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        // Zufälligen Spawn-Punkt auswählen
-        int randomIndex = Random.Range(0, spawnPoints.Length);
-        Transform spawnPoint = spawnPoints[randomIndex];
+        if(spawnPoints.Length == 0 || enemyPrefabs.Length == 0) return;
 
-        // Gegner erstellen
-        GameObject newEnemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+        // 1. Zufälligen Ort wählen
+        int randomPointIndex = Random.Range(0, spawnPoints.Length);
+        Transform spawnPoint = spawnPoints[randomPointIndex];
 
-        // --- HIER PASSIERT DIE MAGIE ---
-        // Wir greifen auf das Health-Script des NEUEN Gegners zu
-        EnemyHealth healthScript = newEnemy.GetComponent<EnemyHealth>();
+        // 2. Zufälligen Gegner wählen (Normal oder Tank)
+        int randomEnemyIndex = Random.Range(0, enemyPrefabs.Length);
+        GameObject selectedPrefab = enemyPrefabs[randomEnemyIndex];
 
-        if (healthScript != null)
+        // 3. Gegner erstellen
+        GameObject newEnemy = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
+
+        // --- CHECK: Welches Script hat der Gegner? ---
+        
+        // Versuche das normale Script zu holen
+        EnemyHealth normalHealth = newEnemy.GetComponent<EnemyHealth>();
+        if (normalHealth != null)
         {
-            // Wir überschreiben seine Werte mit den neuen, stärkeren Werten
-            healthScript.maxHealth = currentEnemyHealth;
-            // Wir müssen auch das aktuelle Leben auffüllen, sonst startet er halb tot
-            healthScript.SetHealth(currentEnemyHealth); 
+            normalHealth.SetHealth(currentEnemyHealth);
+        }
+
+        // Versuche das Tank Script zu holen
+        TankHealth tankHealth = newEnemy.GetComponent<TankHealth>();
+        if (tankHealth != null)
+        {
+            // Tanks kriegen doppelt so viel Leben als Bonus!
+            tankHealth.SetHealth(currentEnemyHealth); 
         }
     }
 
     void IncreaseDifficulty()
     {
         currentEnemyHealth += healthIncrease;
-        Debug.Log("ACHTUNG: Gegner sind stärker geworden! Neues Leben: " + currentEnemyHealth);
+        Debug.Log("Gegner stärker geworden! HP Basis: " + currentEnemyHealth);
         
-        // Optional: Spawn-Rate erhöhen (damit es auch MEHR Gegner werden)
         if(spawnInterval > 0.5f)
         {
-            spawnInterval -= 0.1f; // Gegner kommen etwas schneller
+            spawnInterval -= 0.1f; 
         }
     }
 }

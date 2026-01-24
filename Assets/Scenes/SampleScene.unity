@@ -4948,7 +4948,7 @@ MonoBehaviour:
   attackRange: 0.5
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   attackRate: 2
   attackDamage: 30
   attackDuration: 0.4
