@@ -163,8 +163,8 @@ GameObject:
   - component: {fileID: 5067145381084322244}
   - component: {fileID: 4715429219155619720}
   - component: {fileID: 7410570579817359632}
-  - component: {fileID: 1703509738300549924}
   - component: {fileID: 6168328539110050968}
+  - component: {fileID: -1272612155657179325}
   m_Layer: 6
   m_Name: Enemy_Tank
   m_TagString: Untagged
@@ -312,27 +312,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1703509738300549924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8461078566306181884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feeb563bc1e83404886e413c890efafb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 1.2
-  checkRadius: 6
-  attackRadius: 0.8
-  damage: 25
-  attackCooldown: 2
-  knockbackForce: 2
-  knockbackDuration: 0.1
-  knockbackCooldown: 2
-  player: {fileID: 0}
 --- !u!114 &6168328539110050968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,11 +324,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71313f9cf67b046b488c04705f51cd03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 4
   healthBarFill: {fileID: 5053589815762347731}
   healthCanvas: {fileID: 8862971767253487227}
   spriteRenderer: {fileID: 0}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
+  itemDrop:
+  - itemPref: {fileID: 6654170960699358577, guid: 4e7a3b723f6714e31ab7eb2c36e3b3f1, type: 3}
+    dropChance: 100
+  - itemPref: {fileID: 6654170960699358577, guid: 4e7a3b723f6714e31ab7eb2c36e3b3f1, type: 3}
+    dropChance: 100
+--- !u!114 &-1272612155657179325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461078566306181884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33827bc2163cf8f49a1fb211f1ab2395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1.2
+  checkRadius: 6
+  attackRadius: 0.8
+  damage: 2
+  attackCooldown: 2
+  knockbackForce: 2
+  knockbackDuration: 0.1
+  player: {fileID: 0}
 --- !u!1 &8862971767253487227
 GameObject:
   m_ObjectHideFlags: 0

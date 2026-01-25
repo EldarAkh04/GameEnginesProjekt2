@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
     [Header("Lebens-Einstellungen")]
-    public int maxHealth = 100;
+    public int maxHealth;
     private int currentHealth;
 
     [Header("Health Bar UI")]
@@ -14,29 +14,23 @@ public class EnemyHealth : MonoBehaviour
     public GameObject healthCanvas; 
 
     [Header("Feedback")]
-    public SpriteRenderer spriteRenderer; // Ziehe hier den SpriteRenderer des Gegners rein
-    public Color hitColor = Color.red;    // Farbe beim Treffer
+    public SpriteRenderer spriteRenderer; 
+    public Color hitColor = Color.red;    
     private Color originalColor;
 
-    // Referenz zum AI Script für Knockback
+    [Header("Loot")]
+    public List<ItemDropper> itemDrop = new List<ItemDropper>();
     private EnemyAI enemyAI;
 
     void Start()
     {
+        Debug.Log(gameObject.name + " startet mit " + maxHealth + " HP");
         currentHealth = maxHealth;
         
-        // 1. SpriteRenderer finden, falls nicht zugewiesen
-        if(spriteRenderer == null) 
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
+        if(spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+        if(spriteRenderer != null) originalColor = spriteRenderer.color;
 
-        // 2. JETZT die Farbe speichern (ganz wichtig!)
-        if(spriteRenderer != null) 
-        {
-            originalColor = spriteRenderer.color;
-        }
-
+        // Hier holen wir uns das Tank-Script
         enemyAI = GetComponent<EnemyAI>();
 
         UpdateHealthBar(); 
@@ -45,16 +39,15 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage, Transform damageSource = null)
     {
         currentHealth -= damage;
-        
-        // 1. Visueller Flash (Aufleuchten)
         StartCoroutine(FlashEffect());
 
-        // 2. Rückstoß (Knockback) auslösen
-        if(enemyAI != null && damageSource != null)
+        if(damageSource != null)
         {
-            // Berechne Richtung: Weg vom Spieler (damageSource)
             Vector2 knockbackDir = (transform.position - damageSource.position).normalized;
-            enemyAI.ApplyKnockback(knockbackDir);
+            if (enemyAI != null)
+            {
+                enemyAI.ApplyKnockback(knockbackDir);
+            }
         }
 
         UpdateHealthBar();
@@ -68,12 +61,8 @@ public class EnemyHealth : MonoBehaviour
     IEnumerator FlashEffect()
     {
         if(spriteRenderer == null) yield break;
-
-        // Farbe ändern
         spriteRenderer.color = hitColor;
-        // Kurz warten (0.1 Sekunden)
         yield return new WaitForSeconds(0.1f);
-        // Farbe zurücksetzen
         spriteRenderer.color = originalColor;
     }
 
@@ -87,21 +76,29 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
-        // Hier könntest du Loot droppen (z.B. eine Münze instanzieren)
-        // Instantiate(coinPrefab, transform.position, Quaternion.identity);
-
-        // UI ausblenden
+        foreach(ItemDropper lootItem in itemDrop)
+        {
+            if(Random.Range(0f, 100f) <= lootItem.dropChance)
+            {
+                InstantiateLoot(lootItem.itemPref);
+            }
+        }
         if(healthCanvas != null) healthCanvas.SetActive(false);
-        
-        // Gegner zerstören
         Destroy(gameObject);
     }
 
-    // Neue Hilfsfunktion für den Spawner
-    public void SetHealth(int amount)
+    void InstantiateLoot(GameObject loot)
     {
-        currentHealth = amount;
-        maxHealth = amount; // Sicherheitshalber MaxHealth auch anpassen
-        UpdateHealthBar();
+        if(loot != null)
+        {
+            GameObject droppedItem = Instantiate(loot, transform.position, Quaternion.identity);
+        }
     }
+}
+
+[System.Serializable]
+public class ItemDropper
+{
+    public GameObject itemPref;
+    [Range(0, 100)] public float dropChance;
 }

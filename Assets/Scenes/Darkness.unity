@@ -5451,7 +5451,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackRate: 1.5
-  attackDamage: 20
+  attackDamage: 1
   attackDuration: 0.4
 --- !u!61 &742385806
 BoxCollider2D:
@@ -5670,15 +5670,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 8461078566306181884, guid: 34425992cf87a43699ad60cf013691c5, type: 3}
   - {fileID: 8461078566306181884, guid: 00c7e0f612f4a4173970e72d90c83a65, type: 3}
+  - {fileID: 8461078566306181884, guid: 34425992cf87a43699ad60cf013691c5, type: 3}
   spawnPoints:
   - {fileID: 1495600362}
   - {fileID: 186766446}
   spawnInterval: 4
-  difficultyIncreaseInterval: 40
-  baseHealth: 30
-  healthIncrease: 10
 --- !u!4 &1083011137
 Transform:
   m_ObjectHideFlags: 0

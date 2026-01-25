@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
     public float attackRate = 2f;
-    public int attackDamage = 20; // <--- NEU: Hier kannst du den Schaden einstellen!
+    public int attackDamage; // <--- NEU: Hier kannst du den Schaden einstellen!
     private float nextAttackTime = 0f;
 
     // --- NEU: Einstellungen für den Bewegungs-Stopp ---
@@ -110,13 +110,13 @@ public class PlayerMovement : MonoBehaviour
                 normalHealth.TakeDamage(attackDamage, transform);
             }
 
-            // --- VERSUCH 2: Ist es ein Tank? ---
-            TankHealth tankHealth = enemy.GetComponent<TankHealth>();
+           /*  // --- VERSUCH 2: Ist es ein Tank? ---
+            EnemyHealth tankHealth = enemy.GetComponent<TankHealth>();
             if (tankHealth != null)
             {
                 tankHealth.TakeDamage(attackDamage, transform);
-            }
-        }
+            }*/
+        } 
     }
     // -----------------------------------------------------------
 
