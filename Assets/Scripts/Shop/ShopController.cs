@@ -99,6 +99,10 @@ public class ShopController : MonoBehaviour
             if(invSlot?.currentItem != null)
             {
                 Item originalItem = invSlot.currentItem.GetComponent<Item>();
+                if(originalItem != null && originalItem.ID == 4)
+                {
+                    continue;
+                }
                 CreatShopSlot(playerInvGrid, originalItem.ID, originalItem.NItem, false, invSlot);
 
             }
