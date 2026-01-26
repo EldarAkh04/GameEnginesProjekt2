@@ -77,4 +77,15 @@ public class GameManager : MonoBehaviour
     // Wichtig: Falls du die HealthBar direkt aktualisieren willst, 
     // falls diese nicht nur über Update() läuft.
     }
+
+    public void LeaveGame()
+    {
+        MenuController menu = FindObjectOfType<MenuController>();
+        if (menu != null && menu.menuCanvas != null)
+        {
+            menu.menuCanvas.SetActive(false);
+        }
+        Time.timeScale = 1f; 
+        SceneManager.LoadScene("Scenes/StartScene");
+    }
 }

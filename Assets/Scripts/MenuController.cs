@@ -7,6 +7,8 @@ public class MenuController : MonoBehaviour
     public GameObject menuCanvas;
     public static bool IsMenuOpen = false;
 
+    public static MenuController Instance;
+
     void Start()
     {
         menuCanvas.SetActive(false);
