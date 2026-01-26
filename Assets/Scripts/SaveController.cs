@@ -9,10 +9,16 @@ public class SaveController : MonoBehaviour
     private string saveLoc;
     private InventoryController inventoryController;
     private ShopNPC[] shops;
+    public static SaveController Instance;
 
     void Start()
     {
         saveLoc = Path.Combine(Application.persistentDataPath, "saveData.json");
+        Debug.Log("DIE DATEI LIEGT HIER: " + saveLoc);
+        if (!File.Exists(saveLoc))
+        {
+            CreateFreshSaveFile();
+        }
         inventoryController = FindObjectOfType<InventoryController>();
         shops = FindObjectsOfType<ShopNPC>();
         LoadGame();
@@ -96,5 +102,30 @@ public class SaveController : MonoBehaviour
                 }
             }
         }
+    }
+    public void ResetSaveData()
+    {
+        if (File.Exists(saveLoc))
+        {
+            File.Delete(saveLoc);
+            Debug.Log("Alte Speicherdatei gelöscht.");
+        }
+        CreateFreshSaveFile();
+    }
+
+    public void CreateFreshSaveFile()
+    {
+        SaveData newGameData = new SaveData
+        {
+            playerPos = new Vector3(0, 0, 0),
+            inventorySaveData = new List<InventorySaveData>(),
+            playerGold = 50,
+            currentHealth = 5f,
+            startingHealth = 5f
+        };
+
+        string json = JsonUtility.ToJson(newGameData);
+        File.WriteAllText(saveLoc, json);
+        Debug.Log("Neue Speicherdatei für das Abenteuer erstellt.");
     }
 }
