@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerItemCollector : MonoBehaviour
 {
     private InventoryController inventoryController;
+    private SaveController saveController;
     
     void Start()
     {
@@ -21,6 +22,11 @@ public class PlayerItemCollector : MonoBehaviour
                 bool itemAdd = inventoryController.AddItem(collision.gameObject);
                 if (itemAdd)
                 {
+                    if (saveController != null)
+                    {
+                        saveController.saveGame();
+                        Debug.Log("Spielstand nach Item-Aufnahme aktualisiert.");
+                    }
                     Destroy(collision.gameObject);
                 }
             }
