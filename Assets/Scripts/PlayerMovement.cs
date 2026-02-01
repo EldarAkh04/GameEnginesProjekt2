@@ -25,10 +25,22 @@ public class PlayerMovement : MonoBehaviour
     public float attackDuration = 0.4f;
     private bool isAttacking = false;
 
+    // --- NEU: AUDIO VARIABLEN ---
+    [Header("Kampf Audio")]
+    public AudioSource audioSource; // Die Audio Source Komponente am Player
+    public AudioClip attackSound;   // Die Sound-Datei (Wusch/Schlag)
+    // ----------------------------
+
     private void Awake() 
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        
+        // Falls du vergessen hast, die AudioSource zuzuweisen, suchen wir sie automatisch
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
     }
 
     private void Update()
@@ -83,19 +95,43 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
     void Attack()
     {
         isAttacking = true;
         StartCoroutine(EndAttackDelay());
         animator.SetTrigger("Attack");
+
+        // --- NEU: SOUND ABSPIELEN ---
+        if (audioSource != null && attackSound != null)
+        {
+            // Zufällige Tonhöhe (Pitch) zwischen 0.9 und 1.1
+            // Das sorgt dafür, dass nicht jeder Schlag exakt gleich klingt
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            
+            // Sound einmal abspielen
+            audioSource.PlayOneShot(attackSound);
+        }
+        // -----------------------------
+
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach(Collider2D enemy in hitEnemies)
         {
+            // Prüfen auf normalen Gegner
             EnemyHealth normalHealth = enemy.GetComponent<EnemyHealth>();
             if (normalHealth != null)
             {
                 normalHealth.TakeDamage(attackDamage, transform);
             }
+            
+            // Falls du den Tank noch hast, hier die Zeilen dafür (einfach Kommentar entfernen):
+            /*
+            TankHealth tankHealth = enemy.GetComponent<TankHealth>();
+            if (tankHealth != null)
+            {
+                tankHealth.TakeDamage(attackDamage, transform);
+            }
+            */
         } 
     }
 
@@ -130,7 +166,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Das ist der Timer, der gefehlt hat!
     IEnumerator EndAttackDelay()
     {
         yield return new WaitForSeconds(attackDuration);
