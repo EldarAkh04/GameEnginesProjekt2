@@ -6,33 +6,33 @@ using TMPro;
 
 public class NPC : MonoBehaviour, IInteractable
 {
+    [Header("Dialog Einstellungen")]
     public NPCDialogue dialogueData;
     public GameObject dialoguePanel; 
     public TextMeshProUGUI dialogueText, nameText;
     public Image portraitImage; 
 
-    // --- NEU: Audio Variablen ---
     [Header("Audio Einstellungen")]
-    public AudioSource audioSource; // Zieh hier die AudioSource rein
-    public AudioClip voiceSound;    // Dein kurzes "Beep" oder "Blip"
-    [Range(0.5f, 1.5f)]
-    public float minPitch = 0.8f;   // Tiefste Tonlage
-    [Range(0.5f, 1.5f)]
-    public float maxPitch = 1.2f;   // Höchste Tonlage
-    // ----------------------------
+    public AudioSource audioSource; 
+    public AudioClip voiceSound;    
+    
+    [Range(0.5f, 2f)]
+    public float minPitch = 0.8f;   
+    [Range(0.5f, 2f)]
+    public float maxPitch = 1.2f;   
+    
+    // Timer gegen das Echo (0.05 ist sehr schnell, 0.1 ist normal)
+    [Range(0.01f, 0.5f)]
+    public float soundInterval = 0.08f; 
 
+    private float lastSoundTime;       
     private int dialogueIndex;
     private bool isTyping, isDialogueActive;
 
-    // --- NEU: AudioSource automatisch finden (falls vergessen) ---
     private void Start()
     {
-        if(audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
+        if(audioSource == null) audioSource = GetComponent<AudioSource>();
     }
-    // -------------------------------------------------------------
 
     public bool CanInteract()
     {
@@ -42,17 +42,10 @@ public class NPC : MonoBehaviour, IInteractable
     public void Interact()
     {
         if(dialogueData == null || dialoguePanel == null) return;
-        
         if(PauseController.IsGamePaused && !isDialogueActive) return;
 
-        if(!isDialogueActive)
-        {
-            StartDialogue(); 
-        }
-        else
-        {
-            NextLine();
-        }
+        if(!isDialogueActive) StartDialogue(); 
+        else NextLine();
     }
 
     void StartDialogue()
@@ -76,6 +69,10 @@ public class NPC : MonoBehaviour, IInteractable
            StopAllCoroutines();
            dialogueText.SetText(dialogueData.dialogueLines[dialogueIndex]);
            isTyping = false;
+           
+           // SOFORT STOPPEN, wenn Spieler den Text überspringt
+           if(audioSource != null) audioSource.Stop(); 
+           
            return; 
         }
 
@@ -96,24 +93,38 @@ public class NPC : MonoBehaviour, IInteractable
         isTyping = true;
         dialogueText.SetText("");
 
+        // Timer zurücksetzen, damit der erste Ton sofort kommt!
+        lastSoundTime = -100f; 
+
         foreach(char letter in dialogueData.dialogueLines[dialogueIndex].ToCharArray())
         {
             dialogueText.text += letter;
             
-            // --- NEU: Sound abspielen bei jedem Buchstaben ---
+            // --- SOUND LOGIK ---
             if(audioSource != null && voiceSound != null)
             {
-                // Zufällige Tonhöhe für den "Brabbel"-Effekt
-                audioSource.pitch = Random.Range(minPitch, maxPitch);
-                // Sound abspielen (PlayOneShot erlaubt Überlappung)
-                audioSource.PlayOneShot(voiceSound);
+                // Prüfen, ob genug Zeit vergangen ist (gegen Echo)
+                if(Time.unscaledTime - lastSoundTime >= soundInterval)
+                {
+                    lastSoundTime = Time.unscaledTime;
+                    
+                    audioSource.pitch = Random.Range(minPitch, maxPitch);
+                    // PlayOneShot garantiert, dass man etwas hört!
+                    audioSource.PlayOneShot(voiceSound);
+                }
             }
-            // -------------------------------------------------
+            // -------------------
 
             yield return new WaitForSecondsRealtime(dialogueData.typingSpeed);
         }
 
         isTyping = false;
+
+        // --- WICHTIG: Sobald der Text fertig ist, Sound SOFORT abwürgen ---
+        if(audioSource != null) 
+        {
+            audioSource.Stop();
+        }
 
         if(dialogueData.autoProgressLines != null && 
            dialogueData.autoProgressLines.Length > dialogueIndex && 
@@ -127,6 +138,9 @@ public class NPC : MonoBehaviour, IInteractable
     public void EndDialogue()
     {
         StopAllCoroutines();
+        // Sicherstellen, dass Ruhe ist
+        if(audioSource != null) audioSource.Stop();
+        
         isDialogueActive = false;
         dialogueText.SetText("");
         dialoguePanel.SetActive(false);
