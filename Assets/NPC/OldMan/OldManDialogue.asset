@@ -21,14 +21,17 @@ MonoBehaviour:
   - "Weiter oben im Norden findest du einen Laden. Dr\xFCcke dort E, um einzutreten."
   - "Merke dir: Der rote Trank heilt deine Wunden. Das Buch erh\xF6ht deine maximale
     Lebenskraft."
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  autoProgressLines: 0101010100
-  autoProgressDelay: 1
-  typingSpeed: 0.05
+  - "Dr\xFCcke M, um das Men\xFC zu \xF6ffnen. Dort findest du: Player, Settings
+    und Inventory."
+  - Im Inventory hast du deine Items. Du kannst sie im Shop verkaufen oder neue Items
+    kaufen.
+  - Hinter mir im Westen ist das Portal zur Kampfwelt.
+  - "Dort kannst du Gegner mit deinem Schwert t\xF6ten."
+  - "Sie lassen Coins fallen. Kaufe dir davon im Shop Upgrades f\xFCr dein Leben."
+  - "Vorsicht: Die Gegner werden automatisch st\xE4rker, je l\xE4nger du spielst."
+  - "Viel Spa\xDF ;)"
+  autoProgressLines: 010101010101010101010100
+  autoProgressDelay: 2.5
+  typingSpeed: 0.06
   voiceSound: {fileID: 0}
   voicePitch: 1
