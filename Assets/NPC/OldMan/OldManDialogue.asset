@@ -15,10 +15,20 @@ MonoBehaviour:
   npcName: Old Man
   npcPortrait: {fileID: 21300000, guid: 8a25fee1d51d34849a432559e96bcf55, type: 3}
   dialogueLines:
-  - Hallo Player8
-  - Wie kann ich dir helfen?
-  autoProgressLines: 0100
-  autoProgressDelay: 1.5
+  - "Sei gegr\xFC\xDFt, junger Reisender. Man nennt mich einfach \"Old Man\""
+  - 'Bewegen kannst du dich mit W, A, S und D. '
+  - "Das Schwert dort rechts geh\xF6rt dir. Mit der Leertaste kannst du es schwingen."
+  - "Weiter oben im Norden findest du einen Laden. Dr\xFCcke dort E, um einzutreten."
+  - "Merke dir: Der rote Trank heilt deine Wunden. Das Buch erh\xF6ht deine maximale
+    Lebenskraft."
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  autoProgressLines: 0101010100
+  autoProgressDelay: 1
   typingSpeed: 0.05
   voiceSound: {fileID: 0}
   voicePitch: 1
