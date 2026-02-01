@@ -18,11 +18,13 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        float intervalToUse = (Time.time >= timeSecondPhase) ? fasterSpawnInterval : spawnInterval;
-        if (Time.time >= nextSpawnTime)
+        float timeInScene = Time.timeSinceLevelLoad;
+
+        float intervalToUse = (timeInScene >= timeSecondPhase) ? fasterSpawnInterval : spawnInterval;
+        if (timeInScene >= nextSpawnTime)
         {
             SpawnEnemy();
-            nextSpawnTime = Time.time + intervalToUse;
+            nextSpawnTime = timeInScene + intervalToUse;
         }
     }
 
@@ -30,11 +32,13 @@ public class EnemySpawner : MonoBehaviour
     {
         if(spawnPoints.Length == 0 || enemyPrefabs.Length == 0) return;
 
+        float timeInScene = Time.timeSinceLevelLoad;
+
         int randomPointIndex = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[randomPointIndex];
 
         int selectedEnemyIndex = 0;
-        if (Time.time > timeFirstPhase)
+        if (timeInScene > timeFirstPhase)
         {
             selectedEnemyIndex = Random.Range(0, enemyPrefabs.Length);
         }

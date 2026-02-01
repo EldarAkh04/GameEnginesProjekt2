@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     private UI_Fade fadeUI;
 
     //Health
-    [SerializeField] public float startingHealth = 2.0f;
+    [SerializeField] public float startingHealth = 5.0f;
+    [SerializeField] private GameObject gameOverPanel;
     public float currentHealth { get; private set; }
 
     private void Awake()
@@ -24,6 +25,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(transform.root.gameObject); 
         }
+
+        if (gameOverPanel != null){
+            gameOverPanel.SetActive(false);
+        }
+        Time.timeScale = 1f;
     }
 
     public void ChangeLevelTo(string levelName)
@@ -52,7 +58,7 @@ public class GameManager : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, startingHealth);
         if (currentHealth <= 0)
         {
-            // Game Over logic here
+            TriggerGameOver();
             Debug.Log("Game Over!");
         }
     }
@@ -80,12 +86,28 @@ public class GameManager : MonoBehaviour
 
     public void LeaveGame()
     {
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
+        Time.timeScale = 1f; 
         MenuController menu = FindObjectOfType<MenuController>();
         if (menu != null && menu.menuCanvas != null)
         {
             menu.menuCanvas.SetActive(false);
         }
-        Time.timeScale = 1f; 
         SceneManager.LoadScene("Scenes/StartScene");
+    }
+
+    private void TriggerGameOver()
+    {
+        Debug.Log("Game Over!");
+        
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+            Time.timeScale = 0f; 
+            currentHealth = startingHealth;
+        }
     }
 }
