@@ -11,8 +11,28 @@ public class NPC : MonoBehaviour, IInteractable
     public TextMeshProUGUI dialogueText, nameText;
     public Image portraitImage; 
 
+    // --- NEU: Audio Variablen ---
+    [Header("Audio Einstellungen")]
+    public AudioSource audioSource; // Zieh hier die AudioSource rein
+    public AudioClip voiceSound;    // Dein kurzes "Beep" oder "Blip"
+    [Range(0.5f, 1.5f)]
+    public float minPitch = 0.8f;   // Tiefste Tonlage
+    [Range(0.5f, 1.5f)]
+    public float maxPitch = 1.2f;   // Höchste Tonlage
+    // ----------------------------
+
     private int dialogueIndex;
     private bool isTyping, isDialogueActive;
+
+    // --- NEU: AudioSource automatisch finden (falls vergessen) ---
+    private void Start()
+    {
+        if(audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+    }
+    // -------------------------------------------------------------
 
     public bool CanInteract()
     {
@@ -21,10 +41,8 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // Sicherstellen, dass alles zugewiesen ist
         if(dialogueData == null || dialoguePanel == null) return;
         
-        // Nicht interagieren, wenn Spiel pausiert ist (außer Dialog läuft schon)
         if(PauseController.IsGamePaused && !isDialogueActive) return;
 
         if(!isDialogueActive)
@@ -51,20 +69,16 @@ public class NPC : MonoBehaviour, IInteractable
         StartCoroutine(TypeLine());
     }
 
-    // Ausschnitt aus NPC.cs
     void NextLine()
     {
         if(isTyping)
         {
-           // Wenn der Text noch getippt wird, Text sofort vervollständigen
            StopAllCoroutines();
            dialogueText.SetText(dialogueData.dialogueLines[dialogueIndex]);
            isTyping = false;
-           // WICHTIG: Die Methode ist hier beendet. Der nächste Klick geht zur nächsten Zeile.
            return; 
         }
 
-        // NUR wenn das Tippen bereits beendet ist: zum nächsten Satz gehen.
         dialogueIndex++; 
 
         if(dialogueIndex < dialogueData.dialogueLines.Length)
@@ -77,7 +91,6 @@ public class NPC : MonoBehaviour, IInteractable
         }
     }
     
-
     IEnumerator TypeLine()
     {
         isTyping = true;
@@ -87,20 +100,25 @@ public class NPC : MonoBehaviour, IInteractable
         {
             dialogueText.text += letter;
             
-            // WICHTIGE ÄNDERUNG:
-            // Wir benutzen WaitForSecondsRealtime statt WaitForSeconds.
-            // Das funktioniert auch, wenn Time.timeScale auf 0 ist (Pause).
+            // --- NEU: Sound abspielen bei jedem Buchstaben ---
+            if(audioSource != null && voiceSound != null)
+            {
+                // Zufällige Tonhöhe für den "Brabbel"-Effekt
+                audioSource.pitch = Random.Range(minPitch, maxPitch);
+                // Sound abspielen (PlayOneShot erlaubt Überlappung)
+                audioSource.PlayOneShot(voiceSound);
+            }
+            // -------------------------------------------------
+
             yield return new WaitForSecondsRealtime(dialogueData.typingSpeed);
         }
 
         isTyping = false;
 
-        // Auto Progress Logik
         if(dialogueData.autoProgressLines != null && 
            dialogueData.autoProgressLines.Length > dialogueIndex && 
            dialogueData.autoProgressLines[dialogueIndex])
         {
-            // Auch hier Realtime nutzen, sonst hängt es beim Auto-Progress
             yield return new WaitForSecondsRealtime(dialogueData.autoProgressDelay);
             NextLine();
         }
