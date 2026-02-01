@@ -437,7 +437,7 @@ Transform:
   m_GameObject: {fileID: 380842949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.028, y: 0.074, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4629,6 +4629,18 @@ PrefabInstance:
       propertyPath: uniqueID
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3252721373774537600, guid: 65dba0d5bee6949f689e98ff173b139b, type: 3}
+      propertyPath: m_Radius
+      value: 0.22943437
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252721373774537600, guid: 65dba0d5bee6949f689e98ff173b139b, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.03926167
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252721373774537600, guid: 65dba0d5bee6949f689e98ff173b139b, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.13087237
+      objectReference: {fileID: 0}
     - target: {fileID: 4774188522514203795, guid: 65dba0d5bee6949f689e98ff173b139b, type: 3}
       propertyPath: m_Name
       value: Sword Variant
@@ -5016,7 +5028,7 @@ Transform:
   m_GameObject: {fileID: 678680163}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.064, y: -0.145, z: 0}
+  m_LocalPosition: {x: -0.004, y: 0.094, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5102,18 +5114,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0035307705, y: -0.09269232}
+  m_Offset: {x: -0.005003512, y: 0.12350968}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.5}
+    pivot: {x: 0.41935483, y: 0.125}
+    oldSize: {x: 0.31, y: 0.32}
     newSize: {x: 0.32, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.20461604, y: 0.31257927}
+  m_Size: {x: 0.35823315, y: 0.36947447}
   m_EdgeRadius: 0
 --- !u!50 &742385807
 Rigidbody2D:
@@ -5151,7 +5163,7 @@ Transform:
   m_GameObject: {fileID: 742385804}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.855, y: 1.751, z: 0}
+  m_LocalPosition: {x: -1.46, y: 1.751, z: 0}
   m_LocalScale: {x: 2.207466, y: 2.207466, z: 2.207466}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5222,7 +5234,7 @@ SpriteRenderer:
   m_SortingLayerID: 315502269
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1080357557, guid: 6750068ff401a4bc0998d22688962592, type: 3}
+  m_Sprite: {fileID: 7730921228679642280, guid: 4fb9796c9bf6149c991803ba2f50e835, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6073,7 +6085,7 @@ Transform:
   m_GameObject: {fileID: 1477023419}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.12, y: -0.274, z: 0}
   m_LocalScale: {x: 3.353, y: 3.353, z: 3.353}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6120,7 +6132,7 @@ SpriteRenderer:
   m_SortingLayerID: -1282693735
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1080357557, guid: 6750068ff401a4bc0998d22688962592, type: 3}
+  m_Sprite: {fileID: 7730921228679642280, guid: 4fb9796c9bf6149c991803ba2f50e835, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6530,6 +6542,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2797995325551993971, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
+      propertyPath: itemPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2797995325551993971, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
+      propertyPath: itemPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 932288149105296361, guid: 8a296a6964f264a6c94033483a567e78, type: 3}
+    - target: {fileID: 2797995325551993971, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
+      propertyPath: itemPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 932288149105296361, guid: 8a296a6964f264a6c94033483a567e78, type: 3}
     - target: {fileID: 2859207077282256501, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
       propertyPath: m_Name
       value: System
