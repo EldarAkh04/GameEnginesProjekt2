@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OldManDialogue
   m_EditorClassIdentifier: 
   npcName: Old Man
-  npcPortrait: {fileID: 21300000, guid: 8a25fee1d51d34849a432559e96bcf55, type: 3}
+  npcPortrait: {fileID: -1370704580282894982, guid: 5fd35a4814146483ebba82f851447993, type: 3}
   dialogueLines:
   - "Sei gegr\xFC\xDFt, junger Reisender. Man nennt mich einfach \"Old Man\""
   - 'Bewegen kannst du dich mit W, A, S und D. '
