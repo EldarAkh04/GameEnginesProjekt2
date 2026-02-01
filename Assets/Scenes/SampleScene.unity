@@ -5028,7 +5028,7 @@ Transform:
   m_GameObject: {fileID: 678680163}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.004, y: 0.094, z: 0}
+  m_LocalPosition: {x: -0.048, y: 0.059, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5073,7 +5073,7 @@ MonoBehaviour:
   rb: {fileID: 742385807}
   moveSpeed: 1
   attackPoint: {fileID: 678680164}
-  attackRange: 0.5
+  attackRange: 1
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -5114,7 +5114,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.005003512, y: 0.12350968}
+  m_Offset: {x: 0.031610742, y: 0.123509675}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.41935483, y: 0.125}
@@ -5125,7 +5125,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.35823315, y: 0.36947447}
+  m_Size: {x: 0.32161894, y: 0.36947447}
   m_EdgeRadius: 0
 --- !u!50 &742385807
 Rigidbody2D:
@@ -5163,7 +5163,7 @@ Transform:
   m_GameObject: {fileID: 742385804}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.46, y: 1.751, z: 0}
+  m_LocalPosition: {x: -2.855, y: 1.3, z: 0}
   m_LocalScale: {x: 2.207466, y: 2.207466, z: 2.207466}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5289,7 +5289,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.5745901
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -6542,18 +6542,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2797995325551993971, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
-      propertyPath: itemPrefabs.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2797995325551993971, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
-      propertyPath: itemPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 932288149105296361, guid: 8a296a6964f264a6c94033483a567e78, type: 3}
-    - target: {fileID: 2797995325551993971, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
-      propertyPath: itemPrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 932288149105296361, guid: 8a296a6964f264a6c94033483a567e78, type: 3}
     - target: {fileID: 2859207077282256501, guid: b01a5b4c2b91e4b0ba209f8db8e387d5, type: 3}
       propertyPath: m_Name
       value: System

@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: -5640925663071285039, guid: e8404de28a1a345a094305238a3e3190, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8664fe8132f824bf8896b62349258602, type: 3}
+      objectReference: {fileID: -6085736537389893935, guid: 7c5ef53d9311341c5b451fc243494a6a, type: 3}
     - target: {fileID: 610102531676348543, guid: e8404de28a1a345a094305238a3e3190, type: 3}
       propertyPath: m_Name
       value: Potion Variant
@@ -99,7 +99,7 @@ PrefabInstance:
     - target: {fileID: 7557426209205882904, guid: e8404de28a1a345a094305238a3e3190, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8664fe8132f824bf8896b62349258602, type: 3}
+      objectReference: {fileID: -6085736537389893935, guid: 7c5ef53d9311341c5b451fc243494a6a, type: 3}
     - target: {fileID: 8761895722038611360, guid: e8404de28a1a345a094305238a3e3190, type: 3}
       propertyPath: ID
       value: 3
